@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get '/homepage', to: 'home#homepage'
   resources :users
   
+  patch 'exercises/:id/change_favourite', to: 'exercises#change_favourite', as: 'change_favourite'
 end
