@@ -13,4 +13,12 @@ class User < ApplicationRecord
     foreign_key: :trainer_id,
     class_name: :User,
     optional: true
+
+  has_many :user_exercises,
+    foreign_key: :user_id,
+    class_name: :UserExercise
+    
+  has_many :exercises, through: :user_exercises
+    
+  # scope :favourite_exercises, -> { user where('users_exercises.favourite')}
 end
