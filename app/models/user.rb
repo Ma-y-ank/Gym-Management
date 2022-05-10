@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
+  enum role: [:user, :trainer, :admin]
+  validates :role, inclusion: {in: roles.keys} 
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable
 
@@ -14,11 +17,6 @@ class User < ApplicationRecord
     class_name: :User,
     optional: true
 
-  has_many :user_exercises,
-    foreign_key: :user_id,
-    class_name: :UserExercise
-    
+  has_many :user_exercises  
   has_many :exercises, through: :user_exercises
-    
-  # scope :favourite_exercises, -> { user where('users_exercises.favourite')}
 end

@@ -1,0 +1,18 @@
+<div class="col mt-3">
+  <div class="dropdown mt-4">
+    <%= form_with model: Exercise, url: exercises_path, method: 'get' do |form|%>
+      <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"><span class="text-warning">Filter</span></button>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <% Exercise.categories.keys.each do |category| %>
+          <li class="nav-item text-warning">
+            <%= check_box_tag "exercise[category][]", category%>
+            <%= category %>
+          </li>
+        <% end %>
+      </ul>
+      <span>
+        <%= form.submit 'Submit', class: "btn btn-dark text-warning" %>
+      </span>
+    <% end %>
+  </div>
+</div>

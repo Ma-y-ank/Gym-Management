@@ -1,9 +1,0 @@
-<ul>
-  <% exercises.each do |exercise| %>
-    <li>    
-      <%= link_to exercise.name, exercise_path(exercise) %> 
-      <% exercise.favourite?(current_user.id) ? var= "Unfavourite" : var= "Favourite" %>
-      <%= button_to var, change_favourite_path(exercise, type: var), method: :patch, class: "btn btn-primary"%>
-    </li>
-  <% end %>
-</ul>

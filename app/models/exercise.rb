@@ -1,11 +1,10 @@
 class Exercise < ApplicationRecord
-  has_many :exercise_users,
-    foreign_key: :exercise_id,
-    class_name: :UserExercise
+  enum category: {Back: "Back", Leg: "Leg", Chest: "Chest", Arm: "Arm", Abs: "Abs", Shoulder: "Shoulder"}
+  
+  has_many :user_exercises
+  has_many :users, through: :user_exercises
 
-  has_many :users, through: :exercise_users
-
-  def favourite?(user)
-    UserExercise.find_by(user_id: user, exercise_id: self.id).favourite?
+  def favourite?(user_id)
+    user_exercises.find_by(user_id: user_id).favourite?
   end
 end

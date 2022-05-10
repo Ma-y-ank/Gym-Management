@@ -1,0 +1,29 @@
+<div class="container text-warning">
+  <%= form_for exercise do |form| %>
+    <div>
+      <%= form.label :name %><br>
+      <%= form.text_field :name %>
+    </div>
+
+    <div>
+      <%= form.label :description %><br>
+      <%= form.text_field :description %>
+    </div>
+
+    <div>
+      <%= form.label :link%><br>
+      <%= form.text_field :link%>
+    </div>
+
+    <div>
+      <%= form.label :category%><br>
+      <%= form.select :category, Exercise.categories.keys%>
+    </div>
+
+    <div>
+      <%= form.submit :Submit, class: "btn btn-dark text-warning" %>
+    </div>
+    <div id="blank"></div>
+    <%= link_to "Back", :back, class: "btn btn-dark text-warning" %>
+  <% end %>
+</div>

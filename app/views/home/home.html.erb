@@ -1,11 +1,17 @@
-<h1>B-Fit Gym</h1>
-
 <% if user_signed_in? %>
-  <h3>Hi <%= current_user.name %>!</h3>
-  <%= render 'exercises/exercise', exercises: current_user.exercises %>
-  <br>
-  <%= link_to 'Logout', destroy_user_session_path, method: :delete %>  
+  <%= render "users/#{current_user.role}"%>
 <% else %>
-  <%= link_to 'Login', new_user_session_path %>
-  <%= link_to 'Sign Up!', new_user_registration_path %>
+  <section id="check" class="bg-transparent text-light p-5 text-center">
+    <div class="container">
+      <div class="align-items-center justify-content-start">
+        <div>
+          <div id="blank"></div>
+            <h1>Become The <span class="text-warning">BEST</span> Version Of Yourself</h1>
+            <div id="blank"></div>
+            <%= link_to 'Login', new_user_session_path, class: "btn btn-dark text-warning m-5" %>
+            <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-dark text-warning m-5"  %>
+        </div>
+      </div>
+    </div>
+  </section> 
 <% end %>
