@@ -9,6 +9,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :exercises do
+    collection do
+      post 'import'
+    end
+  end
+
   get '/homepage', to: 'home#homepage'
   
   resources :users do 

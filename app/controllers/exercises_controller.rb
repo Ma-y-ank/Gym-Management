@@ -1,11 +1,12 @@
+require 'csv'
 class ExercisesController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_admin?, only: [:new, :edit, :destroy]
+  before_action :check_admin?, only: [:new, :edit, :destroy, :import]
 
   def index
     # binding.pry
     if params[:exercise].present?
-      @exercises= current_user.exercises.where(category: params[:exercise][:category])
+      @exercises= current_user.exercises.by_category(params[:exercise][:category])
     else
       @exercises= current_user.exercises
     end
@@ -55,6 +56,11 @@ class ExercisesController < ApplicationController
     @exercise= Exercise.find_by(id: params[:id])
     @exercise.destroy
     redirect_to :homepage, notice: "Exercise deleted successfully"
+  end
+
+  def import
+    Exercise.import(params[:file])
+    redirect_to root_path, notice: "Import Successful"
   end
 
   private

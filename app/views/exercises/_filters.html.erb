@@ -1,18 +1,30 @@
-<div class="col mt-3">
-  <div class="dropdown mt-4">
-    <%= form_with model: Exercise, url: exercises_path, method: 'get' do |form|%>
-      <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"><span class="text-warning">Filter</span></button>
-      <ul class="dropdown-menu dropdown-menu-dark">
-        <% Exercise.categories.keys.each do |category| %>
-          <li class="nav-item text-warning">
-            <%= check_box_tag "exercise[category][]", category%>
-            <%= category %>
+<div class="col mt-4">
+  <%= form_with model: Exercise, url: exercises_path, method: 'get' do |form|%>
+    <button class="btn btn-dark text-warning mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+      Filter
+    </button>
+    <div class="collapse text-warning" id="filterCollapse">
+      <div class="card card-body bg-dark" style="width: 10rem;">
+        <ul class="list-group list-group-flush bg-dark">
+          <span>Favourite</span>
+          <li class="list-group-item bg-dark text-warning">
+            <%= check_box_tag "exercise[favourite]", true%>
+            <%="Favourites"%>
           </li>
-        <% end %>
-      </ul>
-      <span>
-        <%= form.submit 'Submit', class: "btn btn-dark text-warning" %>
-      </span>
-    <% end %>
-  </div>
+          <span>Category</span>
+          <% Exercise.categories.keys.each do |category| %>
+            <li class="list-group-item bg-dark text-warning">
+              <%= check_box_tag "exercise[category][]", category%>
+              <%= category %>
+            </li>
+          <% end %>
+          <span>
+            <%= form.submit 'Submit', class: "btn btn-secondary text-warning" %>
+          </span>
+          </ul>
+      </div>
+    </div>
+  <% end %>
 </div>
+
+

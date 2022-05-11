@@ -1,3 +1,39 @@
 <%= render 'exercises/exercises_with_filter', exercises: Exercise.all %>
-<%= button_to 'Add a exercise', new_exercise_path, method: :get, class: "btn btn-dark text-warning"%>
 <%= button_to 'Show all users', users_path, method: :get, class: "btn btn-dark text-warning"%>
+<button class="btn btn-dark text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+Add Exercises
+</button>
+
+<!-- Add Exercises Collapse -->
+
+<div class="collapse" id="collapseExample">
+  <div class="card card-body bg-dark" style="width: 13rem;">
+    <%= button_to 'Add a exercise', new_exercise_path, method: :get, class: "btn btn-secondary text-warning"%>
+
+    <button type="button" class="btn btn-secondary btn-sm text-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Multiple
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+      </div>
+      <div class="modal-body">
+        Choose your file to upload
+        <%= form_tag import_exercises_path, multipart: true, method: :post do %>
+          <%= file_field_tag :file %>
+          <%= submit_tag "Import CSV", class: "btn-medium" %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

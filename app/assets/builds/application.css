@@ -17870,7 +17870,7 @@ textarea.form-control-lg {
 }
 
 body {
-  background: url("background.jpg") no-repeat;
+  background: url("background2.jpg") no-repeat;
   background-size: cover;
 }
 
@@ -17889,5 +17889,5 @@ a.prop:visited {
 }
 
 a.prop:hover {
-  font-size: 200%;
+  font-size: 150%;
 }

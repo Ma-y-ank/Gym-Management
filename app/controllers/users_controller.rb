@@ -11,7 +11,13 @@ class UsersController < ApplicationController
   end
 
   def manage_exercises
-    User.find_by(id: params[:id]).update(exercise_ids: params[:user][:exercise_ids])
+    # binding.pry
+    new_exercises= Exercise.where(id: params[:user][:exercise_ids]).map(&:name)
+    user= User.find_by(id: params[:id])
+    # Change exercise for user in database
+    user.update(exercise_ids: params[:user][:exercise_ids])
+    # Send mail to user when exercises are updated
+    UserMailer.with(exercises: new_exercises, email: user.email).user_exercise_update.deliver_later
     redirect_to user_path(params[:id]), notice: "Exercises changed successfully!"
   end
 end
