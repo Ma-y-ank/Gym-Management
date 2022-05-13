@@ -24,11 +24,11 @@ class User < ApplicationRecord
 
   ROUTINE= 
   {
-    'Monday': 'Back',
+    'Monday': 'Abs',
     'Tuesday': 'Chest',
     'Wednesday': 'Arm',
     'Thursday': 'Leg',
-    'Friday': 'Abs',
+    'Friday': 'Back',
     'Saturday': 'Shoulder'
   }
 
@@ -43,6 +43,8 @@ class User < ApplicationRecord
   end
 
   def remaining_exercises
-    ((completed_exercises/current_day_exercises.length.to_f)*100).to_i
+    if current_day_exercises!= 0
+      ((completed_exercises/current_day_exercises.length.to_f)*100).to_i
+    end
   end
 end

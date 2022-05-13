@@ -32,6 +32,7 @@ class ExercisesController < ApplicationController
 
   def new
       @exercise= Exercise.new
+      @exercise.diets.build
   end
 
   def create
@@ -47,6 +48,7 @@ class ExercisesController < ApplicationController
 
   def edit
       @exercise= Exercise.find(params[:id])
+      @exercise.diets
   end
 
   def update
@@ -71,6 +73,6 @@ class ExercisesController < ApplicationController
 
   private
     def exercise_params
-      params.require(:exercise).permit(:name, :description, :category, :link)
+      params.require(:exercise).permit(:name, :description, :category, :link, diets_attributes: [:id, :name])
     end
 end

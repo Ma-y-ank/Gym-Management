@@ -5,6 +5,9 @@ class Exercise < ApplicationRecord
   has_many :user_exercises
   has_many :users, through: :user_exercises
 
+  has_many :diets, dependent: :destroy
+  accepts_nested_attributes_for :diets, allow_destroy: true
+
   def self.import(file)
     CSV.foreach(file.path, headers:true) do |row|
       Exercise.create!(row.to_hash)

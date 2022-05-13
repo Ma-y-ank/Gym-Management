@@ -5,7 +5,10 @@ class HomeController < ApplicationController
       @diets=[]
       current_exercises.each do |exercise|
         if exercise.status?(current_user.id)
-          @diets << Diet.find_by(exercise_id: exercise.id).name
+          diets=Diet.where(exercise_id: exercise.id)
+          diets.each do |diet|
+            @diets << diet.name
+          end
         end
       end
     end
