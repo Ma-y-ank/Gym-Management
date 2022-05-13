@@ -24,6 +24,12 @@ class ExercisesController < ApplicationController
     redirect_to :homepage, notice: "You have successfully changed the exercise to #{type}."
   end
 
+  def change_status
+    @user_exercises= current_user.current_day_exercises
+    @user_exercise = current_user.user_exercises.find_by(exercise_id: params[:id])
+    @user_exercise.update(status: true)
+  end
+
   def new
       @exercise= Exercise.new
   end

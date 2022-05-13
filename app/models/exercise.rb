@@ -15,4 +15,7 @@ class Exercise < ApplicationRecord
     user_exercises.find_by(user_id: user_id).favourite?
   end 
 
+  def status?(user_id)
+    user_exercises.find_by(user_id: user_id).status
+  end
 end

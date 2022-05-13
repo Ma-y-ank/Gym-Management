@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_04_061950) do
     t.integer "user_id"
     t.integer "exercise_id"
     t.boolean "favourite", default: false
+    t.boolean "status", default: false
   end
 
   create_table "users", force: :cascade do |t|

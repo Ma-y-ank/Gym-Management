@@ -1,0 +1,3 @@
+$('.exercise-progress').html('<%= j render "shared/progress" %>')
+
+$('.current-exercises #user-exercise-<%= @user_exercise.exercise.id%>').text('Completed')

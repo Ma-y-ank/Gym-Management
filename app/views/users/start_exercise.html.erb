@@ -1,0 +1,12 @@
+<div class="container text-warning">
+  <br>
+  
+  <div class="exercise-progress">
+    <%= render 'shared/progress' %>
+  </div>
+  <div class="current-exercises">
+    <%= render 'users/current_exercises', user_exercises: @user_exercises%>
+  </div>
+
+  <%= link_to "Back", root_path, class: "btn btn-dark text-warning" %>
+</div>

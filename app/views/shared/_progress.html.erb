@@ -1,0 +1,8 @@
+<!--Progress bar-->
+      
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated role="progressbar" style="width: <%= current_user.remaining_exercises%>%"></div>
+</div>
+
+<h4>Total exercises for today- <%= current_user.current_day_exercises.length%></h4>
+<h4>Exercises completed for today- <%= current_user.completed_exercises%></h4>

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_admin?
+  before_action :check_admin?, only: [:index, :show, :manage_exercises]
 
   def index
     @users= User.user
@@ -19,5 +19,9 @@ class UsersController < ApplicationController
     # Send mail to user when exercises are updated
     UserMailer.with(exercises: new_exercises, email: user.email).user_exercise_update.deliver_later
     redirect_to user_path(params[:id]), notice: "Exercises changed successfully!"
+  end
+
+  def start_exercise
+    @user_exercises= current_user.current_day_exercises
   end
 end

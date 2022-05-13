@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :exercises do
     member do
       patch 'change_favourite'
+      patch 'change_status'
     end
   end
 
@@ -20,8 +21,11 @@ Rails.application.routes.draw do
   resources :users do 
     member do 
       patch 'manage_exercises'
+      get 'start_exercise'
     end
   end
+
+  resources :diets
   
   # patch 'exercises/:id/change_favourite', to: 'exercises#change_favourite', as: 'change_favourite'
 end

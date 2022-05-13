@@ -1,0 +1,7 @@
+<% if @diets.blank? %>
+  <h5> No diet to show currently, complete some exercises. </h5>
+<% else %>
+  <% @diets.each do |diet| %>
+    <h5 class= "text-warning"><%= diet %></h5>
+  <% end %>
+<% end %>

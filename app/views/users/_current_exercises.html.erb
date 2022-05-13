@@ -1,0 +1,23 @@
+<div class="current-exercises">
+  <h3 class="text-warning" style="text-align:center">Exercises for Today</h3>
+  <table class="table text-warning table-hover table-borderless">
+    <thead class="table-dark text-warning">
+      <tr>
+        <th style="text-align:start">Name</th>
+        <th style="text-align:end">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% user_exercises.each do |exercise| %>
+        <tr>
+          <td><%= link_to exercise.name, exercise_path(exercise), class: "text-warning lead prop" %></td>
+          <% if exercise.status?(current_user.id) %>
+            <td class="text-warning" style="text-align:end"> Completed </td>
+          <% else %>
+            <td id="user-exercise-<%=exercise.id %>" class="text-warning" style="text-align:end"> <%= button_to 'Mark as Completed', change_status_exercise_path(exercise), method: :patch, class: "btn btn-dark text-warning", remote: true %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

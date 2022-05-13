@@ -1,1 +1,27 @@
 <%= render 'exercises/exercises_with_filter', exercises: current_user.exercises %>
+<br>
+
+<div class="container">
+  <div class="card bg-dark text-warning">
+    <div class="card-body">
+      <h3 style="text-align:center">Exercise Completion Status</h3>
+      
+      <%= render 'shared/progress' %>
+      
+      <!--Start exercise button-->
+      <%= button_to 'Start Exercise', start_exercise_user_path(current_user), method: :get, class: "btn btn-secondary text-warning"%>
+    </div>
+  </div>
+  <br>
+  <br>
+
+  <div class="card bg-dark text-warning">
+    <div class="card-body">
+      <h3 style="text-align:center">Diet Plan</h3>
+      <%= render "diets/diets" %>
+    </div>
+  </div>
+</div>
+
+
+
