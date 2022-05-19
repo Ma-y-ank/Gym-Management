@@ -11,7 +11,7 @@
       <% user_exercises.each do |exercise| %>
         <tr>
           <td><%= link_to exercise.name, exercise_path(exercise), class: "text-warning lead prop" %></td>
-          <% if exercise.status?(current_user.id) %>
+          <% if exercise.completed?(current_user.id) %>
             <td class="text-warning" style="text-align:end"> Completed </td>
           <% else %>
             <td id="user-exercise-<%=exercise.id %>" class="text-warning" style="text-align:end"> <%= button_to 'Mark as Completed', change_status_exercise_path(exercise), method: :patch, class: "btn btn-dark text-warning", remote: true %></td>

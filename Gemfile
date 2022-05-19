@@ -18,7 +18,7 @@ gem 'cssbundling-rails' # Install bootstrap 5
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
-
+gem 'pagy', '~> 5.10'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -37,6 +37,7 @@ gem 'devise'
 # gem 'capistrano-rails', group: :development
 gem "letter_opener", group: :development
 
+gem "cocoon"
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

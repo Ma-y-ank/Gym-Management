@@ -1,10 +1,10 @@
-<div class="col-7">
+<div class="user-exercises">
   <h3 class="text-warning" style="text-align:center">Exercises</h3>
   <table class="table text-warning table-hover table-borderless">
     <thead class="table-dark text-warning">
       <tr>
         <th style="text-align:start">Name</th>
-        <% if current_user.user? %>
+        <% if current_user.trainee? %>
           <th style="text-align:end">Favourite/Unfavourite</th>
         <% else %>
         <th style="text-align:end">No. Of Users</th>
@@ -13,16 +13,17 @@
     </thead>
     <tbody>
       <% exercises.each do |exercise| %>
-        <tr>
-          <td><%= link_to exercise.name, exercise_path(exercise), class: "text-warning lead prop" %></td>
-          <% if current_user.user? %>
-            <% exercise.favourite?(current_user.id) ? var= "Unfavourite" : var= "Favourite" %>
-            <td style="text-align:end"><%= button_to var, change_favourite_exercise_path(exercise, type: var), method: :patch, class: "btn btn-dark text-warning"%></td>
-          <% else %>
-          <td class="text-warning lead" style="text-align:end"><%= exercise.users.count %></td>
-          <% end %>
+        <tr class="toggle-fav-<%= exercise.id %>">
+          <%= render 'exercises/exercise_list_row', exercise: exercise%>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4 d-flex justify-content-center">  
+      <%== render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
+    </div>
+  </div>
 </div>

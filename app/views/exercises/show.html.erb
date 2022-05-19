@@ -1,4 +1,4 @@
-<%= link_to "Back", :back, class: "btn btn-dark text-warning" %>
+<%= link_to 'Back', :back, class: "btn btn-dark text-warning" %>
 <div class="container text-warning">
   <h2><%= @exercise.name %></h2>
   <div class="row align-items-center justify-content-between">
@@ -8,12 +8,18 @@
     <div class="col">
       <h3>Description </h3>
       <p><%= @exercise.description %></p>
-        <% if current_user.admin? %>
-          <%= button_to 'Edit', edit_exercise_path(@exercise), method: :get, class: "btn btn-dark text-warning" %>
-          <%= button_to 'Delete', exercise_path(@exercise), method: :delete, class: "btn btn-dark text-warning" %>
-        <% end %>
+      <% if current_user.admin? %>
+        <%= link_to 'Edit', edit_exercise_path(@exercise), method: :get, class: "btn btn-dark text-warning" %>
+        <%= button_to 'Delete', exercise_path(@exercise), method: :delete, class: "btn btn-dark text-warning" %>
+      <% end %>
+    </div>
+    <div class="col">
+      <h3>Diet</h3>
+      <%if @exercise.diets.present? %>
+        <p><%= @exercise.diets.collect(&:name) %></p>
+      <% else %>
+        <p> No diet assigned for this exercise. </p>
+      <%end%>
     </div>
   </div>
 </div>
-
- 

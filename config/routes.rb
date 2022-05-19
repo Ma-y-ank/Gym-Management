@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'home#homepage'
+  root 'home#home'
   
   resources :exercises do
     member do
-      patch 'change_favourite'
+      patch 'toggle_favourite'
       patch 'change_status'
     end
   end
@@ -16,16 +16,13 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/homepage', to: 'home#homepage'
+  get '/home', to: 'home#home'
   
   resources :users do 
     member do 
       patch 'manage_exercises'
-      get 'start_exercise'
+      get 'start_set'
     end
-  end
-
-  resources :diets
-  
-  # patch 'exercises/:id/change_favourite', to: 'exercises#change_favourite', as: 'change_favourite'
+  end  
+  # patch 'exercises/:id/toggle_favourite', to: 'exercises#toggle_favourite', as: 'toggle_favourite'
 end

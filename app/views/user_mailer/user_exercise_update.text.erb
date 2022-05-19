@@ -1,9 +1,9 @@
-You have been assigned new exercises!
+Your exercise list has been updated!
 ======================================
 
 Exercises:
 --------------------------
 
 <% @exercises.each do |exercise|%>
-  <%= exercise %>
+  <%= Exercise.find_by(id: exercise).name %>
 <% end %>

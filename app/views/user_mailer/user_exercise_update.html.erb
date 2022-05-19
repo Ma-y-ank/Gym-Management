@@ -4,14 +4,13 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <p>You have been assigned new exercises!</p>
+    <p>Your exercise list has been updated!</p>
     <p>
     Exercises: <br>
     --------------------------
     </p>
     <% @exercises.each do |exercise|%>
-      <p> <%= exercise %></p>
+      <p> <%= Exercise.find_by(id: exercise).name %></p>
     <% end %>
   </body>
 </html>
-

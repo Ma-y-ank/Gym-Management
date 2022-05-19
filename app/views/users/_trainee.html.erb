@@ -1,4 +1,4 @@
-<%= render 'exercises/exercises_with_filter', exercises: current_user.exercises %>
+<%= render 'exercises/exercises', exercises: exercises %>
 <br>
 
 <div class="container">
@@ -9,7 +9,7 @@
       <%= render 'shared/progress' %>
       
       <!--Start exercise button-->
-      <%= button_to 'Start Exercise', start_exercise_user_path(current_user), method: :get, class: "btn btn-secondary text-warning"%>
+      <%= link_to 'Start Set', start_set_user_path(current_user), class: "btn btn-secondary text-warning"%>
     </div>
   </div>
   <br>
@@ -22,6 +22,3 @@
     </div>
   </div>
 </div>
-
-
-

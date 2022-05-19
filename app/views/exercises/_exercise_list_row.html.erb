@@ -1,0 +1,7 @@
+<td><%= link_to exercise.name, exercise_path(exercise), class: "text-warning lead prop" %></td>
+<% if current_user.trainee? %>
+  <% exercise.favourite?(current_user.id) ? btn_text= "Unfavourite" : btn_text= "Favourite" %>
+  <td style="text-align:end"><%= button_to btn_text, toggle_favourite_exercise_path(exercise, type: btn_text), method: :patch, class: "btn btn-dark text-warning ", remote: true%></td>
+<% else %>
+<td class="text-warning lead" style="text-align:end"><%= exercise.users.count %></td>
+<% end %>

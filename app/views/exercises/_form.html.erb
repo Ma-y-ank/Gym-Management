@@ -1,4 +1,8 @@
 <div class="container text-warning">
+  <% if exercise.errors.any? %>
+    <%= render 'shared/validation_error', object: exercise%>
+  <% end %>
+
   <%= form_for exercise do |form| %>
     <div>
       <%= form.label :name %><br>
@@ -22,19 +26,18 @@
     <br>
     <h4>Diet</h4>
     
-    <div>
-      <%= form.fields_for :diets do |diets_form| %>
-        <div>
-          <%= diets_form.label :name %><br>
-          <%= diets_form.text_field :name %>
-        </div>
+    <div id='diets'>
+      <%= form.fields_for :diets do |diet| %>
+        <%= render "diet_fields", f: diet %>
       <% end %>
+      <%= link_to_add_association 'Add Diet', form, :diets, class: 'btn btn-secondary text-warning' %>
     </div>
 
     <div>
+      <br>
       <%= form.submit :Submit, class: "btn btn-dark text-warning" %>
     </div>
-    <div id="blank"></div>
-    <%= link_to "Back", :back, class: "btn btn-dark text-warning" %>
+    <br>
+    <%= link_to "Back", root_path, class: "btn btn-dark text-warning" %>
   <% end %>
 </div>

@@ -1,17 +1,15 @@
 class HomeController < ApplicationController
-  def homepage
+  def home
     if current_user
       current_exercises= current_user.current_day_exercises
-      @diets=[]
-      current_exercises.each do |exercise|
-        if exercise.status?(current_user.id)
-          diets=Diet.where(exercise_id: exercise.id)
-          diets.each do |diet|
-            @diets << diet.name
-          end
-        end
-      end
+      # Get id of exercises which have been completed
+      current_exercises= current_exercises.select {|exercise| exercise.completed?(current_user.id)}
+      @diets = current_exercises.map(&:diets).flatten.pluck(:name)
+      # @diets= current_exercises.map do |exercise|
+      #   exercise.diets.map(&:name)
+      # end.flatten
+      # Diet.where(exercise: current_exercises)
+      @pagy, @exercises = (current_user.admin? ?  pagy(Exercise.all, items: 4) : pagy(current_user.exercises, items: 4))
     end
-    render :home
   end
 end

@@ -1,45 +1,44 @@
 require 'csv'
 class ExercisesController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_admin?, only: [:new, :edit, :destroy, :import]
+  before_action :check_admin?, only: [:new, :edit, :destroy, :import, :create, :update]
+  before_action :set_exercise, only: [:show, :edit, :update, :destroy]
 
   def index
-    # binding.pry
-    if params[:exercise].present?
-      @exercises= current_user.exercises.by_category(params[:exercise][:category])
-    else
-      @exercises= current_user.exercises
+    @exercises = (current_user.admin? ? Exercise.all : current_user.exercises)
+    @filtering_params= params[:filtering_params].presence || filtering_params.to_unsafe_hash
+    @filtering_params.each do |key, value|
+      @exercises= @exercises.public_send("filter_by_#{key}", value) if value.present?
     end
+    @pagy, @exercises = pagy(@exercises, items: 4)
   end
 
   def show
-    @exercise= Exercise.find(params[:id])
+    unless @exercise
+      render partial: 'shared/error'
+    end
   end
 
-  def change_favourite
+  def toggle_favourite
     type= params[:type]
-    # binding.pry
-    user_exercise = current_user.user_exercises.find_by(exercise_id: params[:id])
-    user_exercise.update(favourite: type == 'Favourite')
-    redirect_to :homepage, notice: "You have successfully changed the exercise to #{type}."
+    @user_exercise = current_user.user_exercises.find_by(exercise_id: params[:id])
+    @user_exercise.update(favourite: type == 'Favourite')
   end
 
   def change_status
-    @user_exercises= current_user.current_day_exercises
-    @user_exercise = current_user.user_exercises.find_by(exercise_id: params[:id])
-    @user_exercise.update(status: true)
+    @user_exercises = current_user.current_day_exercises
+    @current_user_exercise = current_user.user_exercises.find_by(exercise_id: params[:id])
+    @current_user_exercise.update(completed: true)
   end
 
   def new
-      @exercise= Exercise.new
-      @exercise.diets.build
+    @exercise= Exercise.new
   end
 
   def create
     @exercise= Exercise.new(exercise_params)
 
     if @exercise.save
-      # binding.pry
       redirect_to exercise_path(@exercise), notice: "Exercise added!"
     else
       render :new, status: :unprocessable_entity
@@ -47,12 +46,12 @@ class ExercisesController < ApplicationController
   end
 
   def edit
-      @exercise= Exercise.find(params[:id])
-      @exercise.diets
+    unless @exercise
+      render partial: 'shared/error'
+    end
   end
 
   def update
-    @exercise= Exercise.find(params[:id])
     if @exercise.update(exercise_params)
       redirect_to root_path, notice: "Exercise updated!"
     else
@@ -61,9 +60,13 @@ class ExercisesController < ApplicationController
   end
 
   def destroy
-    @exercise= Exercise.find_by(id: params[:id])
-    @exercise.destroy
-    redirect_to :homepage, notice: "Exercise deleted successfully"
+    if @exercise
+      if @exercise.destroy
+        redirect_to :home, notice: "Exercise deleted successfully"
+      end
+    else
+      redirect_to :home, notice: "Deletion wasnt successful"
+    end
   end
 
   def import
@@ -72,7 +75,16 @@ class ExercisesController < ApplicationController
   end
 
   private
-    def exercise_params
-      params.require(:exercise).permit(:name, :description, :category, :link, diets_attributes: [:id, :name])
-    end
+
+  def exercise_params
+    params.require(:exercise).permit(:name, :description, :category, :link, diets_attributes: [:id, :name, :_destroy])
+  end
+
+  def set_exercise
+    @exercise= Exercise.find_by(id: params[:id])
+  end
+
+  def filtering_params
+    params.slice(:filtering_params)
+  end
 end

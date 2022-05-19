@@ -4,27 +4,25 @@
       Filter
     </button>
     <div class="collapse text-warning" id="filterCollapse">
-      <div class="card card-body bg-dark" style="width: 10rem;">
-        <ul class="list-group list-group-flush bg-dark">
-          <span>Favourite</span>
-          <li class="list-group-item bg-dark text-warning">
-            <%= check_box_tag "exercise[favourite]", true%>
-            <%="Favourites"%>
-          </li>
-          <span>Category</span>
-          <% Exercise.categories.keys.each do |category| %>
+      <div class="card card-body bg-dark">
+        <div class="d-flex p-2 bd-highlight flex-row ">
+          <% if current_user.trainee? %>
             <li class="list-group-item bg-dark text-warning">
-              <%= check_box_tag "exercise[category][]", category%>
-              <%= category %>
+              <%= check_box_tag "filtering_params[favourite]", current_user.id%>
+              <%="Favourites"%>
+            </li>
+          <% end %>
+          <% exercise_categories.each do |category| %>
+            <li class="list-group-item bg-dark text-warning">
+              <%= check_box_tag "filtering_params[category][]", category%>
+              <%= category%>
             </li>
           <% end %>
           <span>
             <%= form.submit 'Submit', class: "btn btn-secondary text-warning" %>
           </span>
-          </ul>
+          </div>
       </div>
     </div>
   <% end %>
 </div>
-
-

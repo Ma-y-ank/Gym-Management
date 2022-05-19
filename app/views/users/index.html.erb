@@ -1,6 +1,8 @@
 <h2 class="text-warning">Users</h2>
+<br>
 <% @users.each do |user|%>
-  <%= link_to user.name.titleize, user_path(user) %>
+  <%= link_to user.name.titleize, user_path(user), class: "text-warning prop"%>
   <br>
 <% end %>
+<br>
 <%= link_to "Back", :back, class: "btn btn-dark text-warning" %>

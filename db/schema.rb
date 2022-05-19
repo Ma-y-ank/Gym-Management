@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_04_061950) do
   enable_extension "plpgsql"
 
   create_table "diets", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.bigint "exercise_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -35,13 +35,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_04_061950) do
     t.integer "user_id"
     t.integer "exercise_id"
     t.boolean "favourite", default: false
-    t.boolean "status", default: false
+    t.boolean "completed", default: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.integer "trainer_id"
-    t.integer "role", default: 0
+    t.string "role", default: "Trainee"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "email", default: "", null: false
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_04_061950) do
     t.datetime "remember_created_at", precision: nil
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["trainer_id"], name: "index_users_on_trainer_id"
   end
 
   add_foreign_key "diets", "exercises"

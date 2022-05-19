@@ -1,5 +1,5 @@
-<%= render 'exercises/exercises_with_filter', exercises: Exercise.all %>
-<%= button_to 'Show all users', users_path, method: :get, class: "btn btn-dark text-warning"%>
+<%= render 'exercises/exercises', exercises: exercises %>
+<%= link_to 'Show all users', users_path, method: :get, class: "btn btn-dark text-warning"%>
 <button class="btn btn-dark text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 Add Exercises
 </button>
@@ -8,7 +8,7 @@ Add Exercises
 
 <div class="collapse" id="collapseExample">
   <div class="card card-body bg-dark" style="width: 13rem;">
-    <%= button_to 'Add a exercise', new_exercise_path, method: :get, class: "btn btn-secondary text-warning"%>
+    <%= link_to 'Add a exercise', new_exercise_path, method: :get, class: "btn btn-secondary text-warning"%>
 
     <button type="button" class="btn btn-secondary btn-sm text-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Add Multiple

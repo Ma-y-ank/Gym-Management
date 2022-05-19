@@ -1,35 +1,37 @@
-require 'byebug'
 class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
-  enum role: [:user, :trainer, :admin]
-  validates :role, inclusion: {in: roles.keys} 
+  enum role: {trainee: 'Trainee', trainer: 'Trainer', admin: 'Admin'}
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable
-
-  has_many :trainees,
-    foreign_key: :trainer_id,
-    class_name: :User
-
+  
+  validates :name, presence: true
   belongs_to :trainer, 
     primary_key: :id,
     foreign_key: :trainer_id,
     class_name: :User,
     optional: true
+  
+  has_many :trainees,
+    foreign_key: :trainer_id,
+    class_name: :User
 
   has_many :user_exercises  
   has_many :exercises, through: :user_exercises
 
+  has_many :diets, through: :exercises
+
   ROUTINE= 
   {
     'Monday': 'Abs',
-    'Tuesday': 'Chest',
-    'Wednesday': 'Arm',
+    'Tuesday': 'Arm',
+    'Wednesday': 'Chest',
     'Thursday': 'Leg',
     'Friday': 'Back',
-    'Saturday': 'Shoulder'
+    'Saturday': 'Shoulder',
+    'Sunday': 'Back'
   }
 
   def current_day_exercises
@@ -37,14 +39,16 @@ class User < ApplicationRecord
     exercises.where(category: User::ROUTINE[day])
   end
 
-  def completed_exercises
-    exercise_ids= current_day_exercises.map(&:id)
-    user_exercises.where(exercise_id: exercise_ids).where(status: true).length
+  def completed_exercises_count
+    exercise_ids= current_day_exercises.ids
+    user_exercises.where(exercise_id: exercise_ids, completed: true).length
   end
 
-  def remaining_exercises
-    if current_day_exercises!= 0
-      ((completed_exercises/current_day_exercises.length.to_f)*100).to_i
+  def remaining_exercises_percentage
+    if current_day_exercises.length > 0  
+      ((completed_exercises_count/current_day_exercises.length.to_f)*100).to_i
+    else
+      0
     end
   end
 end
