@@ -11,7 +11,7 @@ Exercise.destroy_all
 Diet.destroy_all
 UserExercise.destroy_all
 
-u1= User.create(name: 'Mayank Agarwal', email: 'mayank.agarwal0903@gmail.com', password: 'test12',password_confirmation: 'test12', role: :admin)
+u1= User.create(name: 'Mayank Agarwal', email: 'mayank.agarwal@srnext.in', password: 'test12',password_confirmation: 'test12', role: :admin)
 u2= User.create(name: 'Rahul Agarwal', email: 'rahulagarwal@gmail.com', password: 'test12', password_confirmation: 'test12')
 
 e1= Exercise.create(name: 'Deadlift', description: 'Exercise for back', category: 'Back', link: 'https://www.youtube.com/watch?v=ytGaGIn3SjE
