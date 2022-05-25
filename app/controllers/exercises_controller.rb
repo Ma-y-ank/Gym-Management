@@ -60,18 +60,18 @@ class ExercisesController < ApplicationController
   end
 
   def destroy
-    if @exercise
-      if @exercise.destroy
-        redirect_to :home, notice: "Exercise deleted successfully"
-      end
+    if @exercise.destroy
+      redirect_to :home, notice: "Exercise deleted successfully"
     else
-      redirect_to :home, notice: "Deletion wasnt successful"
+      render partial: 'shared/error', notice: "Deletion wasnt successful"
     end
   end
 
   def import
-    Exercise.import(params[:file])
-    redirect_to root_path, notice: "Import Successful"
+    errors= Exercise.import(params[:file])
+    if errors.empty?
+      redirect_to root_path, notice: "Import Successful"
+    end
   end
 
   private

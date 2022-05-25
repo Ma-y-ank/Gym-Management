@@ -14,9 +14,17 @@ class Exercise < ApplicationRecord
   accepts_nested_attributes_for :diets, allow_destroy: true
 
   def self.import(file)
-    CSV.foreach(file.path, headers:true) do |row|
-      Exercise.create!(row.to_hash)
+    error=[]
+    error_indexes= []
+    CSV.foreach(file.path, headers:true).with_index do |row, index|
+      exercise= Exercise.new(row.to_hash)
+      unless exercise.valid?
+        error << "There's a problem with row number #{index + 1}"
+        error_indexes << index
+      end
     end
+    Resque.enque(AddNewExercisesJob, file, error_indexes)
+    error
   end
 
   def favourite?(user_id)
