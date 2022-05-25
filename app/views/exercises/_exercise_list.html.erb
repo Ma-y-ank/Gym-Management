@@ -7,7 +7,9 @@
         <% if current_user.trainee? %>
           <th style="text-align:end">Favourite/Unfavourite</th>
         <% else %>
-        <th style="text-align:end">No. Of Users</th>
+          <th>Edit</th>
+          <th>Delete</th>
+          <th style="text-align:end">No. Of Users</th>
         <% end %> 
       </tr>
     </thead>
@@ -20,8 +22,7 @@
     </tbody>
   </table>
   <div class="row">
-    <div class="col-md-4">
-    </div>
+    <div class="col-md-4"></div>
     <div class="col-md-4 d-flex justify-content-center">  
       <%== render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
     </div>

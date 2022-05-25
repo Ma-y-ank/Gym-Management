@@ -10,7 +10,7 @@
     --------------------------
     </p>
     <% @exercises.each do |exercise|%>
-      <p> <%= Exercise.find_by(id: exercise).name %></p>
+      <p> <%= exercise %></p>
     <% end %>
   </body>
 </html>

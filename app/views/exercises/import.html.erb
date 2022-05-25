@@ -1,0 +1,10 @@
+<div class= "container text-warning">
+  <h2>Error in File upload </h2>
+  <% @errors.each_with_index do |error, i| %>
+    <p class="lead">
+      <%= i+1%>. <%= error%>
+    </p>
+  <% end %>
+  <br>
+<div>
+<%= link_to "Back", root_path, class: "btn btn-dark text-warning" %>

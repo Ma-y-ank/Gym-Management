@@ -15,8 +15,8 @@
     </div>
     <div class="col">
       <h3>Diet</h3>
-      <%if @exercise.diets.present? %>
-        <p><%= @exercise.diets.collect(&:name) %></p>
+      <%if @diet.present? %>
+        <p><%= @diet.collect(&:name).join('\n') %></p>
       <% else %>
         <p> No diet assigned for this exercise. </p>
       <%end%>

@@ -37,7 +37,6 @@ gem 'devise'
 # gem 'capistrano-rails', group: :development
 gem "letter_opener", group: :development
 gem 'smarter_csv'
-gem 'resque'
 
 gem "cocoon"
 # Reduces boot times through caching; required in config/boot.rb

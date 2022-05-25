@@ -28,20 +28,19 @@ class User < ApplicationRecord
     'Monday': 'Abs',
     'Tuesday': 'Arm',
     'Wednesday': 'Chest',
-    'Thursday': 'Leg',
-    'Friday': 'Back',
+    'Thursday': 'Back',
+    'Friday': 'Leg',
     'Saturday': 'Shoulder',
     'Sunday': 'Back'
   }
 
   def current_day_exercises
     day= Date.today.strftime("%A").to_sym
-    exercises.where(category: User::ROUTINE[day])
+    exercises.filter_by_category(User::ROUTINE[day])
   end
 
   def completed_exercises_count
-    exercise_ids= current_day_exercises.ids
-    user_exercises.where(exercise_id: exercise_ids, completed: true).length
+    user_exercises.where(exercise_id: current_day_exercises.ids, completed: true).length
   end
 
   def remaining_exercises_percentage

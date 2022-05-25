@@ -1,7 +1,7 @@
 require 'csv'
 class ExercisesController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_admin?, only: [:new, :edit, :destroy, :import, :create, :update]
+  before_action :only_admin, only: [:new, :edit, :destroy, :import, :create, :update]
   before_action :set_exercise, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -14,15 +14,12 @@ class ExercisesController < ApplicationController
   end
 
   def show
-    unless @exercise
-      render partial: 'shared/error'
-    end
+    @diet= @exercise.diets
   end
 
   def toggle_favourite
-    type= params[:type]
     @user_exercise = current_user.user_exercises.find_by(exercise_id: params[:id])
-    @user_exercise.update(favourite: type == 'Favourite')
+    @user_exercise.update(favourite: params[:type] == 'Favourite')
   end
 
   def change_status
@@ -46,9 +43,6 @@ class ExercisesController < ApplicationController
   end
 
   def edit
-    unless @exercise
-      render partial: 'shared/error'
-    end
   end
 
   def update
@@ -68,9 +62,11 @@ class ExercisesController < ApplicationController
   end
 
   def import
-    errors= Exercise.import(params[:file])
-    if errors.empty?
+    @errors= Exercise.import(params[:file])
+    if @errors.blank?
       redirect_to root_path, notice: "Import Successful"
+    else 
+      render 'import', notice: "Import wasnt Successful"
     end
   end
 
@@ -82,6 +78,10 @@ class ExercisesController < ApplicationController
 
   def set_exercise
     @exercise= Exercise.find_by(id: params[:id])
+
+    unless @exercise
+      render partial: 'shared/error'
+    end
   end
 
   def filtering_params

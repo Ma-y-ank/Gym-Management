@@ -21,21 +21,19 @@ RSpec.describe User, type: :model do
   describe "instance methods" do
     subject(:user){create(:user)}
     
-    before(:all) do 
-      @exercise1= create(:exercise)
-      @exercise2= create(:exercise)
-      @exercise3= create(:exercise)
-    end
+    let(:exercise1){create(:exercise)}
+    let(:exercise2){create(:exercise)}
+    let(:exercise3){create(:exercise)}
     
     it 'should return current day exercises' do
-      @user_exercise1= UserExercise.create(user_id: user.id, exercise_id: @exercise1.id)
-      @user_exercise2= UserExercise.create(user_id: user.id, exercise_id: @exercise2.id)
+      @user_exercise1= UserExercise.create(user_id: user.id, exercise_id: exercise1.id)
+      @user_exercise2= UserExercise.create(user_id: user.id, exercise_id: exercise2.id)
       expect(user.current_day_exercises.count).to eq(2)
     end
 
     it 'should return completed exercises count' do
-      @user_exercise1= UserExercise.create(user_id: user.id, exercise_id: @exercise1.id)
-      @user_exercise2= UserExercise.create(user_id: user.id, exercise_id: @exercise2.id)
+      @user_exercise1= UserExercise.create(user_id: user.id, exercise_id: exercise1.id)
+      @user_exercise2= UserExercise.create(user_id: user.id, exercise_id: exercise2.id)
       expect(user.completed_exercises_count).to eq(0)
       @user_exercise1.update(completed: true)
       expect(user.completed_exercises_count).to eq(1)

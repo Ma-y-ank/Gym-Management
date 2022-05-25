@@ -5,5 +5,5 @@ Exercises:
 --------------------------
 
 <% @exercises.each do |exercise|%>
-  <%= Exercise.find_by(id: exercise).name %>
+  <%= exercise %>
 <% end %>

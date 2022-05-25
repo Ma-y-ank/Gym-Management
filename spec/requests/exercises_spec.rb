@@ -27,8 +27,12 @@ RSpec.describe "Exercises", type: :request do
     before{sign_in user}
     it 'renders the exercises index' do
       get exercises_path
-      expect(response).to be_successful
       expect(response).to render_template('index')
+    end
+
+    it 'gives successfull response' do
+      get exercises_path
+      expect(response).to be_successful
     end
   end
 
@@ -36,8 +40,12 @@ RSpec.describe "Exercises", type: :request do
     before{sign_in user}
     it 'renders the show template' do 
       get exercise_url(id: exercise.id)
-      expect(response).to be_successful
       expect(response).to render_template(:show)
+    end
+
+    it 'gives successfull response' do
+      get exercise_url(id: exercise.id)
+      expect(response).to be_successful
     end
 
     context 'if the exercise does not exist' do
@@ -173,6 +181,20 @@ RSpec.describe "Exercises", type: :request do
       expect(@user_exercise1.favourite).to be false
       @user_exercise1.reload
       expect(@user_exercise1.favourite).to be true
+    end
+  end
+
+  describe 'POST /import' do
+    before{sign_in admin_user}
+    
+    it 'imports the exercise file' do
+      expect(Exercise).to receive(:import).with("foo.txt")
+      post import_exercises_path, params: {file: "foo.txt"}
+    end 
+
+    it 'received invalid file' do
+      post import_exercises_path, params: {file: "foo.txt"}
+      expect(response).to render_template('import')
     end
   end
 end

@@ -3,5 +3,7 @@
   <% btn_text = exercise.favourite?(current_user.id) ? "Unfavourite" : "Favourite" %>
   <td style="text-align:end"><%= button_to btn_text, toggle_favourite_exercise_path(exercise, type: btn_text), method: :patch, class: "btn btn-dark text-warning ", remote: true%></td>
 <% else %>
-<td class="text-warning lead" style="text-align:end"><%= exercise.users.count %></td>
+  <td><%= link_to 'Edit', edit_exercise_path(exercise), method: :get, class: "btn btn-dark text-warning" %></td>
+  <td><%= button_to 'Delete', exercise_path(exercise), method: :delete, class: "btn btn-dark text-warning" %></td>
+  <td class="text-warning lead" style="text-align:end"><%= exercise.users.count %></td>
 <% end %>
